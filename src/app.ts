@@ -1,14 +1,19 @@
-class Department {
-  private employees: string[] = [];
+abstract class Department {
+  static fiscalYear = 2020;
+  protected employees: Array<string> = [];
 
   constructor(
-    private readonly id: number,
-    private name: string
-  ) {}
-
-  describe(this: Department) {
-    console.log(`Department (${this.id}): ${this.name}`);
+    protected readonly id: number,
+    protected name: string
+  ) {
+    console.log(Department.fiscalYear);
   }
+
+  static createEmployee(name: string) {
+    return { name: name };
+  }
+
+  abstract describe(this: Department): void;
 
   addEmployee(employee: string) {
     // validation etc
@@ -22,37 +27,75 @@ class Department {
 }
 
 class ITDepartment extends Department {
-  admins: string[];
-  constructor(id: number, admins: string[]) {
+  admins: Array<string>;
+  constructor(id: number, admins: Array<string>) {
     super(id, "IT");
     this.admins = admins;
+  }
+  describe(): void {
+    console.log("IT Department - ID: " + this.id);
   }
 }
 
 class AccountingDepartment extends Department {
-  constructor(
+  private lastReport: string;
+  private static instance: AccountingDepartment;
+
+  get latestReport() {
+    if (this.lastReport) {
+      return this.lastReport;
+    }
+    throw new Error("No report found");
+  }
+  set latestReport(value: string) {
+    if (!value) {
+      throw new Error("Please pass in a valid value");
+    }
+    this.addReport(value);
+  }
+
+  private constructor(
     id: number,
-    private reports: string[]
+    private reports: Array<string>
   ) {
     super(id, "IT");
+    this.lastReport = reports[0];
   }
-  addReport(text: string) {
+  describe(): void {
+    console.log("Accounting department - ID: " + this.id);
+  }
+
+  addEmployee(name: string): void {
+    if (name === "Max") {
+      return;
+    }
+    this.employees.push(name);
+  }
+  addReport(text: string): void {
     this.reports.push(text);
+    this.lastReport = text;
   }
-  getReports() {
+  static getInstance() {
+    if (AccountingDepartment.instance) {
+      return this.instance;
+    }
+    this.instance = new AccountingDepartment(12, []);
+    return this.instance;
+  }
+
+  getReports(): void {
     console.log(this.reports);
   }
 }
 
-const accDepartment = new AccountingDepartment(123, []);
-accDepartment.addReport("Something went wrong....");
-accDepartment.getReports();
+const employee = Department.createEmployee("Max");
+console.log(employee);
+console.log(employee, Department.fiscalYear);
+const accounting = AccountingDepartment.getInstance();
+
+// accDepartment.latestReport = "s";
+// accDepartment.addReport("Something went wrong....");
+// console.log(accDepartment.latestReport);
+
+// accDepartment.getReports();
 const itDepartment = new ITDepartment(2, ["Bob"]);
-
-const accounting = new Department(1, "Accounting");
-
-accounting.addEmployee("Max");
-accounting.addEmployee("Manu");
-
-accounting.describe();
-accounting.printEmployeeInformation();
