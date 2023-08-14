@@ -1,9 +1,23 @@
-interface Greetable {
-  name: string;
+type AddFn = (a: number, b: number) => number;
+interface AddFunc {
+  (a: number, b: number): number;
+}
+
+interface Named {
+  readonly name: string;
+}
+interface Greetable extends Named {
   greet(phrase: string): void;
 }
 
-class Person implements Greetable {
+interface Person extends Greetable {
+  firstName: string;
+  lastName: string;
+  age: string;
+  gender?: "Male" | "Female" | "Optimus Prime";
+}
+
+class Person implements Person {
   name: string;
   constructor(name: string) {
     this.name = name;
