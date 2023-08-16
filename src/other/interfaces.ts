@@ -10,23 +10,23 @@ interface Greetable extends Named {
   greet(phrase: string): void;
 }
 
-interface Person extends Greetable {
-  firstName: string;
-  lastName: string;
-  age: string;
-  gender?: "Male" | "Female" | "Optimus Prime";
-}
+// interface Person extends Greetable {
+//   firstName: string;
+//   lastName: string;
+//   age: string;
+//   gender?: "Male" | "Female" | "Optimus Prime";
+// }
 
-class Person implements Person {
-  name: string;
-  constructor(name: string) {
-    this.name = name;
-  }
+// class Person implements Person {
+//   name: string;
+//   constructor(name: string) {
+//     this.name = name;
+//   }
 
-  greet(phrase: string): void {
-    console.log(phrase);
-  }
-}
+//   greet(phrase: string): void {
+//     console.log(phrase);
+//   }
+// }
 
 let user1: Greetable;
 
