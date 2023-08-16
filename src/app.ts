@@ -1,7 +1,7 @@
 import { validateInput, autobind, Validatable } from "./util/util";
 
 //Project input class
-class ProjectInput {
+export class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLFormElement;
@@ -90,3 +90,7 @@ class ProjectInput {
     this.hostElement.insertAdjacentElement("afterbegin", this.element);
   }
 }
+
+const prjInput = new ProjectInput();
+const activePrjList = new ProjectList("active");
+const finishedPrjList = new ProjectList("finished");
