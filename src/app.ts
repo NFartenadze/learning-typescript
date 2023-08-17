@@ -77,10 +77,12 @@ export class ProjectInput {
     const userInput = this.gatherUserInput();
     if (Array.isArray(userInput)) {
       const [title, desc, people] = userInput;
-      console.log(title, desc, people);
+      document.getElementById("");
       this.clearInputs();
     }
   }
+
+  addProject() {}
 
   private configure() {
     this.element.addEventListener("submit", this.submitHandler.bind(this));
