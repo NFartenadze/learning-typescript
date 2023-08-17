@@ -1,3 +1,4 @@
+import { projectState } from "./project-state";
 import { validateInput, autobind, Validatable } from "./util/util";
 
 //Project input class
@@ -77,7 +78,7 @@ export class ProjectInput {
     const userInput = this.gatherUserInput();
     if (Array.isArray(userInput)) {
       const [title, desc, people] = userInput;
-      document.getElementById("");
+      projectState.addProject(title, desc, people);
       this.clearInputs();
     }
   }
