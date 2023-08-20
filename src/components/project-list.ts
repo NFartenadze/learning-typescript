@@ -10,8 +10,6 @@ export class ProjectList
   extends Component<HTMLDivElement, HTMLElement>
   implements DragTarget
 {
-
-  
   assignedProjects: Project[];
 
   constructor(private type: "active" | "finished") {
